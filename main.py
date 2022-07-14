@@ -60,28 +60,28 @@ for path, subdirs, files in os.walk(root):
                 df_lazada.drop(to_drop_lazada, inplace=True, axis=1)
                 df_order_lazada =  df_lazada[['createTime', 'orderNumber',  'sellerSku',  'paidPrice', 'status']]
                 df_order_lazada['orderNumber'] = df_order_lazada['orderNumber'].astype(str)
-                df_order_lazada["paidPrice"] = df_order_lazada["paidPrice"].apply(lambda x: format_currency(x, currency="Rp. ", locale="id_ID", group_separator=True))
+                #df_order_lazada["paidPrice"] = df_order_lazada["paidPrice"].apply(lambda x: format_currency(x, currency="Rp. ", locale="id_ID", group_separator=True))
                 
                 df = pd.to_datetime(df_order_lazada['createTime'], format='%d %b %Y %H:%M')
                 df_order_lazada['createTime'] =  df.dt.strftime('%m/%d/%Y')
                 df_order_lazada[["Date", "Month", "Year"]] = df_order_lazada["createTime"].str.split("/", expand = True)
                 df_order_lazada['createTime'] = df.dt.strftime('%d %b %Y %H:%M')
                 
-                #pathlib.Path(f'{parent_path}/{lastPath}_bc2').mkdir(parents=True, exist_ok=True) 
-                #df_order_lazada.to_excel(f'{parent_path}/{lastPath}_bc2/{lastPath}_b2c_'+str(final)+'.xlsx', index = None, header=True)
+                pathlib.Path(f'{parent_path}/{lastPath}_bc2').mkdir(parents=True, exist_ok=True) 
+                df_order_lazada.to_excel(f'{parent_path}/{lastPath}_bc2/{lastPath}_b2c_'+str(final)+'.xlsx', index = None, header=True)
             #Tokopedia
             elif lastPath == 'Tokopedia' or lastPath == 'tokopedia':
                 df_tokopedia  = pd.read_excel(filename, header=4)
                 
                 df_tokopedia.drop(to_drop_tokopedia, inplace=True, axis=1)
-                df_tokopedia["Harga Jual (IDR)"] = df_tokopedia["Harga Jual (IDR)"].apply(lambda x: format_currency(x, currency="Rp. ", locale="id_ID", group_separator=True))
+                #df_tokopedia["Harga Jual (IDR)"] = df_tokopedia["Harga Jual (IDR)"].apply(lambda x: format_currency(x, currency="Rp. ", locale="id_ID", group_separator=True))
                 df_tokopedia["Gudang Pengiriman"] = ''
                 
                 df = pd.to_datetime(df_tokopedia['Tanggal Pembayaran'], format='%d-%m-%Y %H:%M:%S')
                 df_tokopedia['Tanggal Pembayaran'] =  df.dt.strftime('%m/%d/%Y %H:%M')
 
-                #pathlib.Path(f'{parent_path}/{lastPath}_bc2').mkdir(parents=True, exist_ok=True) 
-                #df_tokopedia.to_excel(f'{parent_path}/{lastPath}_bc2/{lastPath}_b2c_'+str(final)+'.xlsx', sheet_name='Laporan Penjualan', index = None, header=True)
+                pathlib.Path(f'{parent_path}/{lastPath}_bc2').mkdir(parents=True, exist_ok=True) 
+                df_tokopedia.to_excel(f'{parent_path}/{lastPath}_bc2/{lastPath}_b2c_'+str(final)+'.xlsx', sheet_name='Laporan Penjualan', index = None, header=True)
             #Shopee
             elif lastPath == 'Shopee' or lastPath == 'shopee':
                 f_filename  = split_lastName [2]
@@ -99,8 +99,8 @@ for path, subdirs, files in os.walk(root):
 
                 df_order_shopee['Waktu Pesanan Dibuat'] = df.dt.strftime('%Y-%m-%d %H:%M')
                 #print(df_order_shopee)
-                #pathlib.Path(f'{parent_path}/{lastPath}_bc2').mkdir(parents=True, exist_ok=True) 
-                #df_order_shopee.to_excel(f'{parent_path}/{lastPath}_bc2/{lastPath}_b2c_'+str(ff)+'.xlsx', sheet_name='orders', index = None, header=True)
+                pathlib.Path(f'{parent_path}/{lastPath}_bc2').mkdir(parents=True, exist_ok=True) 
+                df_order_shopee.to_excel(f'{parent_path}/{lastPath}_bc2/{lastPath}_b2c_'+str(ff)+'.xlsx', sheet_name='orders', index = None, header=True)
 
         if fnmatch(file_extension, '.csv'):
             filename = os.path.join(path, name)
@@ -114,15 +114,15 @@ for path, subdirs, files in os.walk(root):
                 
                 df_blibli.drop(to_drop_blibli, inplace=True, axis=1)
                 df_order_blibli =  df_blibli[['No. Order', 'Tanggal Order',  'Merchant SKU',  'Total Barang', 'Order Status', 'Harga Produk']]
-                df_order_blibli["Harga Produk"] = df_order_blibli["Harga Produk"].apply(lambda x: format_currency(x, currency="Rp. ", locale="id_ID", group_separator=True))
+                #df_order_blibli["Harga Produk"] = df_order_blibli["Harga Produk"].apply(lambda x: format_currency(x, currency="Rp. ", locale="id_ID", group_separator=True))
                 
                 df = pd.to_datetime(df_order_blibli['Tanggal Order'], format='%m/%d/%Y %H:%M')
                 df_order_blibli['Tanggal Order'] =  df.dt.strftime('%m/%d/%Y')
                 df_order_blibli[["Date", "Month", "Year"]] = df_order_blibli["Tanggal Order"].str.split("/", expand = True)
                 df_order_blibli['Tanggal Order'] = df.dt.strftime('%m/%d/%Y %H:%M')
-                print(df_order_blibli)
-                #pathlib.Path(f'{parent_path}/{lastPath}_bc2').mkdir(parents=True, exist_ok=True) 
-                #df_order_blibli.to_excel(f'{parent_path}/{lastPath}_bc2/{lastPath}_b2c_'+str(final)+'.xlsx', index = None, header=True)
+               
+                pathlib.Path(f'{parent_path}/{lastPath}_bc2').mkdir(parents=True, exist_ok=True) 
+                df_order_blibli.to_excel(f'{parent_path}/{lastPath}_bc2/{lastPath}_b2c_'+str(final)+'.xlsx', index = None, header=True)
 
 def getList(folder_id, service):
 
